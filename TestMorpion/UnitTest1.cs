@@ -6,7 +6,7 @@ namespace TestMorpion
         Morpion game = new Morpion();
 
         [Fact]
-        public void TestVerifVictoire()
+        public void TestVerifVictoireHorizontal()
         {
             game.grille = new char[3, 3]
             {
@@ -15,6 +15,42 @@ namespace TestMorpion
                     { ' ', ' ', ' '},
             };
             Assert.True(game.verifVictoire('X'));
+        }
+
+        [Fact]
+        public void TestVerifVictoireDiagonal()
+        {
+            game.grille = new char[3, 3]
+            {
+                    { 'X', ' ', ' '},
+                    { ' ', 'X', ' '},
+                    { ' ', ' ', 'X'},
+            };
+            Assert.True(game.verifVictoire('X'));
+        }
+
+        [Fact]
+        public void TestVerifVictoireVertical()
+        {
+            game.grille = new char[3, 3]
+            {
+                    { ' ', 'X', ' '},
+                    { ' ', 'X', ' '},
+                    { ' ', 'X', ' '},
+            };
+            Assert.True(game.verifVictoire('X'));
+        }
+
+        [Fact]
+        public void TestVerifEgaliteFalse()
+        {
+            game.grille = new char[3, 3]
+            {
+                    { 'X', 'O', 'X'},
+                    { 'X', ' ', 'O'},
+                    { 'O', 'X', 'O'},
+            };
+            Assert.False(game.verifEgalite());
         }
 
         [Fact]
