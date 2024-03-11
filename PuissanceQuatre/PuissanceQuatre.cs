@@ -12,16 +12,19 @@ namespace MorpionApp
         public bool tourDuJoueur = true;
         public char[,] grille;
 
+        const int NB_LIGNES = 4;
+        const int NB_COLONNES = 7;
+
         public PuissanceQuatre()
         {
-            grille = new char[4, 7];
+            grille = new char[NB_LIGNES, NB_COLONNES];
         }
 
         public void BoucleJeu()
         {
             while (!quiterJeu)
             {
-                grille = new char[4, 7]
+                grille = new char[NB_LIGNES, NB_COLONNES]
                 {
                     { ' ', ' ', ' ', ' ', ' ', ' ', ' '},
                     { ' ', ' ', ' ', ' ', ' ', ' ', ' '},
@@ -86,7 +89,7 @@ namespace MorpionApp
                 affichePlateau();
                 Console.WriteLine();
                 Console.WriteLine("Choisir une case valide est appuyer sur [Entrer]");
-                Console.SetCursorPosition(column * 6 + 1, row * 4 + 1);
+                Console.SetCursorPosition(column * 6 + 1, row * NB_LIGNES + 1);
 
                 switch (Console.ReadKey(true).Key)
                 {
@@ -116,28 +119,6 @@ namespace MorpionApp
                             column = column - 1;
                         }
                         break;
-
-                    //case ConsoleKey.UpArrow:
-                    //    if (row <= 0)
-                    //    {
-                    //        row = 3;
-                    //    }
-                    //    else
-                    //    {
-                    //        row = row - 1;
-                    //    }
-                    //    break;
-
-                    //case ConsoleKey.DownArrow:
-                    //    if (row >= 3)
-                    //    {
-                    //        row = 0;
-                    //    }
-                    //    else
-                    //    {
-                    //        row = row + 1;
-                    //    }
-                    //    break;
                     case ConsoleKey.Enter:
                         while (row <= 3)
                         {
@@ -179,7 +160,7 @@ namespace MorpionApp
                 affichePlateau();
                 Console.WriteLine();
                 Console.WriteLine("Choisir une case valide est appuyer sur [Entrer]");
-                Console.SetCursorPosition(column * 6 + 1, row * 4 + 1);
+                Console.SetCursorPosition(column * 6 + 1, row * NB_LIGNES + 1);
 
                 switch (Console.ReadKey(true).Key)
                 {
@@ -209,28 +190,6 @@ namespace MorpionApp
                             column = column - 1;
                         }
                         break;
-
-                    //case ConsoleKey.UpArrow:
-                    //    if (row <= 0)
-                    //    {
-                    //        row = 3;
-                    //    }
-                    //    else
-                    //    {
-                    //        row = row - 1;
-                    //    }
-                    //    break;
-
-                    //case ConsoleKey.DownArrow:
-                    //    if (row >= 3)
-                    //    {
-                    //        row = 0;
-                    //    }
-                    //    else
-                    //    {
-                    //        row = row + 1;
-                    //    }
-                    //    break;
                     case ConsoleKey.Enter:
                         while (row <= 3)
                         {
@@ -280,38 +239,38 @@ namespace MorpionApp
             Console.WriteLine("----+-----+-----+-----+-----+-----+----");
         }
 
-        public bool verifVictoire(char c) =>
-             grille[0, 0] == c && grille[1, 0] == c && grille[2, 0] == c && grille[3, 0] == c ||
-             grille[0, 1] == c && grille[1, 1] == c && grille[2, 1] == c && grille[3, 1] == c ||
-             grille[0, 2] == c && grille[1, 2] == c && grille[2, 2] == c && grille[3, 2] == c ||
-             grille[0, 3] == c && grille[1, 3] == c && grille[2, 3] == c && grille[3, 3] == c ||
-             grille[0, 4] == c && grille[1, 4] == c && grille[2, 4] == c && grille[3, 4] == c ||
-             grille[0, 5] == c && grille[1, 5] == c && grille[2, 5] == c && grille[3, 5] == c ||
-             grille[0, 6] == c && grille[1, 6] == c && grille[2, 6] == c && grille[3, 6] == c ||
-             grille[0, 0] == c && grille[0, 1] == c && grille[0, 2] == c && grille[0, 3] == c ||
-             grille[0, 1] == c && grille[0, 2] == c && grille[0, 3] == c && grille[0, 4] == c ||
-             grille[0, 2] == c && grille[0, 3] == c && grille[0, 3] == c && grille[0, 5] == c ||
-             grille[0, 3] == c && grille[0, 4] == c && grille[0, 5] == c && grille[0, 6] == c ||
-             grille[1, 0] == c && grille[1, 1] == c && grille[1, 2] == c && grille[1, 3] == c ||
-             grille[1, 1] == c && grille[1, 2] == c && grille[1, 3] == c && grille[1, 4] == c ||
-             grille[1, 2] == c && grille[1, 3] == c && grille[1, 4] == c && grille[1, 5] == c ||
-             grille[1, 4] == c && grille[1, 4] == c && grille[1, 5] == c && grille[1, 6] == c ||
-             grille[2, 0] == c && grille[2, 1] == c && grille[2, 2] == c && grille[2, 3] == c ||
-             grille[2, 1] == c && grille[2, 2] == c && grille[2, 3] == c && grille[2, 4] == c ||
-             grille[2, 2] == c && grille[2, 3] == c && grille[2, 3] == c && grille[2, 5] == c ||
-             grille[2, 3] == c && grille[2, 4] == c && grille[2, 5] == c && grille[2, 6] == c ||
-             grille[3, 0] == c && grille[3, 1] == c && grille[3, 2] == c && grille[3, 3] == c ||
-             grille[3, 1] == c && grille[3, 2] == c && grille[3, 3] == c && grille[3, 4] == c ||
-             grille[3, 2] == c && grille[3, 3] == c && grille[3, 4] == c && grille[3, 5] == c ||
-             grille[3, 3] == c && grille[3, 4] == c && grille[3, 5] == c && grille[3, 6] == c ||
-             grille[0, 0] == c && grille[1, 1] == c && grille[2, 2] == c && grille[3, 3] == c ||
-             grille[0, 1] == c && grille[1, 2] == c && grille[2, 3] == c && grille[3, 4] == c ||
-             grille[0, 2] == c && grille[1, 3] == c && grille[2, 4] == c && grille[3, 5] == c ||
-             grille[0, 3] == c && grille[1, 4] == c && grille[2, 5] == c && grille[3, 6] == c ||
-             grille[0, 3] == c && grille[1, 2] == c && grille[2, 1] == c && grille[3, 0] == c ||
-             grille[0, 4] == c && grille[1, 4] == c && grille[2, 2] == c && grille[3, 1] == c ||
-             grille[0, 5] == c && grille[1, 3] == c && grille[2, 3] == c && grille[3, 2] == c ||
-             grille[0, 6] == c && grille[1, 5] == c && grille[2, 4] == c && grille[3, 3] == c;
+        public bool verifVictoire(char symboleJoueur) =>
+             grille[0, 0] == symboleJoueur && grille[1, 0] == symboleJoueur && grille[2, 0] == symboleJoueur && grille[3, 0] == symboleJoueur ||
+             grille[0, 1] == symboleJoueur && grille[1, 1] == symboleJoueur && grille[2, 1] == symboleJoueur && grille[3, 1] == symboleJoueur ||
+             grille[0, 2] == symboleJoueur && grille[1, 2] == symboleJoueur && grille[2, 2] == symboleJoueur && grille[3, 2] == symboleJoueur ||
+             grille[0, 3] == symboleJoueur && grille[1, 3] == symboleJoueur && grille[2, 3] == symboleJoueur && grille[3, 3] == symboleJoueur ||
+             grille[0, 4] == symboleJoueur && grille[1, 4] == symboleJoueur && grille[2, 4] == symboleJoueur && grille[3, 4] == symboleJoueur ||
+             grille[0, 5] == symboleJoueur && grille[1, 5] == symboleJoueur && grille[2, 5] == symboleJoueur && grille[3, 5] == symboleJoueur ||
+             grille[0, 6] == symboleJoueur && grille[1, 6] == symboleJoueur && grille[2, 6] == symboleJoueur && grille[3, 6] == symboleJoueur ||
+             grille[0, 0] == symboleJoueur && grille[0, 1] == symboleJoueur && grille[0, 2] == symboleJoueur && grille[0, 3] == symboleJoueur ||
+             grille[0, 1] == symboleJoueur && grille[0, 2] == symboleJoueur && grille[0, 3] == symboleJoueur && grille[0, 4] == symboleJoueur ||
+             grille[0, 2] == symboleJoueur && grille[0, 3] == symboleJoueur && grille[0, 3] == symboleJoueur && grille[0, 5] == symboleJoueur ||
+             grille[0, 3] == symboleJoueur && grille[0, 4] == symboleJoueur && grille[0, 5] == symboleJoueur && grille[0, 6] == symboleJoueur ||
+             grille[1, 0] == symboleJoueur && grille[1, 1] == symboleJoueur && grille[1, 2] == symboleJoueur && grille[1, 3] == symboleJoueur ||
+             grille[1, 1] == symboleJoueur && grille[1, 2] == symboleJoueur && grille[1, 3] == symboleJoueur && grille[1, 4] == symboleJoueur ||
+             grille[1, 2] == symboleJoueur && grille[1, 3] == symboleJoueur && grille[1, 4] == symboleJoueur && grille[1, 5] == symboleJoueur ||
+             grille[1, 4] == symboleJoueur && grille[1, 4] == symboleJoueur && grille[1, 5] == symboleJoueur && grille[1, 6] == symboleJoueur ||
+             grille[2, 0] == symboleJoueur && grille[2, 1] == symboleJoueur && grille[2, 2] == symboleJoueur && grille[2, 3] == symboleJoueur ||
+             grille[2, 1] == symboleJoueur && grille[2, 2] == symboleJoueur && grille[2, 3] == symboleJoueur && grille[2, 4] == symboleJoueur ||
+             grille[2, 2] == symboleJoueur && grille[2, 3] == symboleJoueur && grille[2, 3] == symboleJoueur && grille[2, 5] == symboleJoueur ||
+             grille[2, 3] == symboleJoueur && grille[2, 4] == symboleJoueur && grille[2, 5] == symboleJoueur && grille[2, 6] == symboleJoueur ||
+             grille[3, 0] == symboleJoueur && grille[3, 1] == symboleJoueur && grille[3, 2] == symboleJoueur && grille[3, 3] == symboleJoueur ||
+             grille[3, 1] == symboleJoueur && grille[3, 2] == symboleJoueur && grille[3, 3] == symboleJoueur && grille[3, 4] == symboleJoueur ||
+             grille[3, 2] == symboleJoueur && grille[3, 3] == symboleJoueur && grille[3, 4] == symboleJoueur && grille[3, 5] == symboleJoueur ||
+             grille[3, 3] == symboleJoueur && grille[3, 4] == symboleJoueur && grille[3, 5] == symboleJoueur && grille[3, 6] == symboleJoueur ||
+             grille[0, 0] == symboleJoueur && grille[1, 1] == symboleJoueur && grille[2, 2] == symboleJoueur && grille[3, 3] == symboleJoueur ||
+             grille[0, 1] == symboleJoueur && grille[1, 2] == symboleJoueur && grille[2, 3] == symboleJoueur && grille[3, 4] == symboleJoueur ||
+             grille[0, 2] == symboleJoueur && grille[1, 3] == symboleJoueur && grille[2, 4] == symboleJoueur && grille[3, 5] == symboleJoueur ||
+             grille[0, 3] == symboleJoueur && grille[1, 4] == symboleJoueur && grille[2, 5] == symboleJoueur && grille[3, 6] == symboleJoueur ||
+             grille[0, 3] == symboleJoueur && grille[1, 2] == symboleJoueur && grille[2, 1] == symboleJoueur && grille[3, 0] == symboleJoueur ||
+             grille[0, 4] == symboleJoueur && grille[1, 4] == symboleJoueur && grille[2, 2] == symboleJoueur && grille[3, 1] == symboleJoueur ||
+             grille[0, 5] == symboleJoueur && grille[1, 3] == symboleJoueur && grille[2, 3] == symboleJoueur && grille[3, 2] == symboleJoueur ||
+             grille[0, 6] == symboleJoueur && grille[1, 5] == symboleJoueur && grille[2, 4] == symboleJoueur && grille[3, 3] == symboleJoueur;
 
         public bool verifEgalite() =>
             grille[0, 0] != ' ' && grille[0, 1] != ' ' && grille[0, 2] != ' ' && grille[0, 3] != ' ' && grille[0, 4] != ' ' && grille[0, 5] != ' ' && grille[0, 6] != ' ' &&
