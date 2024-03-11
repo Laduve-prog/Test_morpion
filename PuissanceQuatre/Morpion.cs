@@ -8,7 +8,7 @@ namespace MorpionApp
 {
     public class Morpion
     {
-        public bool quiterJeu = false;
+        public bool quitterJeu = false;
         public bool tourDuJoueur = true;
         public char[,] grille;
 
@@ -19,7 +19,7 @@ namespace MorpionApp
 
         public void BoucleJeu()
         {
-            while (!quiterJeu)
+            while (!quitterJeu)
             {
                 grille = new char[3, 3]
                 {
@@ -27,11 +27,11 @@ namespace MorpionApp
                     { ' ', ' ', ' '},
                     { ' ', ' ', ' '},
                 };
-                while (!quiterJeu)
+                while (!quitterJeu)
                 {
                     if (tourDuJoueur)
                     {
-                        tourJoueur();
+                        JouerTour(1);
                         if (verifVictoire('X'))
                         {
                             finPartie("Le joueur 1 à gagné !");
@@ -40,7 +40,7 @@ namespace MorpionApp
                     }
                     else
                     {
-                        tourJoueur2();
+                        JouerTour(2);
                         if (verifVictoire('O'))
                         {
                             finPartie("Le joueur 2 à gagné !");
@@ -54,7 +54,7 @@ namespace MorpionApp
                         break;
                     }
                 }
-                if (!quiterJeu)
+                if (!quitterJeu)
                 {
                     Console.WriteLine("Appuyer sur [Echap] pour quitter, [Entrer] pour rejouer.");
                     GetKey:
@@ -63,7 +63,7 @@ namespace MorpionApp
                             case ConsoleKey.Enter:
                                 break;
                             case ConsoleKey.Escape:
-                                quiterJeu = true;
+                                quitterJeu = true;
                                 Console.Clear();
                                 break;
                             default:
@@ -74,12 +74,12 @@ namespace MorpionApp
             }
         }
 
-        public void tourJoueur()
+        public void JouerTour(int joueur)
         {
             var (row, column) = (0, 0);
             bool moved = false;
 
-            while (!quiterJeu && !moved)
+            while (!quitterJeu && !moved)
             {
                 Console.Clear();
                 affichePlateau();
@@ -90,7 +90,7 @@ namespace MorpionApp
                 switch (Console.ReadKey(true).Key)
                 {
                     case ConsoleKey.Escape:
-                        quiterJeu = true;
+                        quitterJeu = true;
                         Console.Clear();
                         break;
 
@@ -138,91 +138,15 @@ namespace MorpionApp
                         }
                         break;
                     case ConsoleKey.Enter:
-                        if (grille[row, column] is ' ')
+                        if (grille[row, column] == ' ')
                         {
-                            grille[row, column] = 'X';
+                            grille[row, column] = joueur == 1 ? 'X' : 'O';
                             moved = true;
-                            quiterJeu = false;
+                            quitterJeu = false;
                         }
                         break;
                 }
-
-            }
-        }
-
-        public void tourJoueur2()
-        {
-            var (row, column) = (0, 0);
-            bool moved = false;
-
-            while (!quiterJeu && !moved)
-            {
-                Console.Clear();
-                affichePlateau();
-                Console.WriteLine();
-                Console.WriteLine("Choisir une case valide est appuyer sur [Entrer]");
-                Console.SetCursorPosition(column * 6 + 1, row * 4 + 1);
-
-                switch (Console.ReadKey(true).Key)
-                {
-                    case ConsoleKey.Escape:
-                        quiterJeu = true;
-                        Console.Clear();
-                        break;
-
-                    case ConsoleKey.RightArrow:
-                        if (column >= 2)
-                        {
-                            column = 0;
-                        }
-                        else
-                        {
-                            column = column + 1;
-                        }
-                        break;
-
-                    case ConsoleKey.LeftArrow:
-                        if (column <= 0)
-                        {
-                            column = 2;
-                        }
-                        else
-                        {
-                            column = column - 1;
-                        }
-                        break;
-
-                    case ConsoleKey.UpArrow:
-                        if (row <= 0)
-                        {
-                            row = 2;
-                        }
-                        else
-                        {
-                            row = row - 1;
-                        }
-                        break;
-
-                    case ConsoleKey.DownArrow:
-                        if (row >= 2)
-                        {
-                            row = 0;
-                        }
-                        else
-                        {
-                            row = row + 1;
-                        }
-                        break;
-                    case ConsoleKey.Enter:
-                        if (grille[row, column] is ' ')
-                        {
-                            grille[row, column] = 'O';
-                            moved = true;
-                            quiterJeu = false;
-                        }
-                        break;
-                }
-            }
+            }      
         }
 
         public void affichePlateau()
