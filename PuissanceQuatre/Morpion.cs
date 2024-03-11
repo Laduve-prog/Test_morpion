@@ -12,16 +12,21 @@ namespace MorpionApp
         public bool tourDuJoueur = true;
         public char[,] grille;
 
+        internal ConsoleUtilisateur consoleUtilisateur = new ConsoleUtilisateur();
+
+        const int NB_LIGNES = 3;
+        const int NB_COLONNES = 3;
+
         public Morpion()
         {
-            grille = new char[3, 3];
+            grille = new char[NB_LIGNES, NB_COLONNES];
         }
 
         public void BoucleJeu()
         {
             while (!quitterJeu)
             {
-                grille = new char[3, 3]
+                grille = new char[NB_LIGNES, NB_COLONNES]
                 {
                     { ' ', ' ', ' '},
                     { ' ', ' ', ' '},
@@ -82,7 +87,7 @@ namespace MorpionApp
             while (!quitterJeu && !moved)
             {
                 Console.Clear();
-                affichePlateau();
+                consoleUtilisateur.afficherPlateau(grille);
                 Console.WriteLine();
                 Console.WriteLine("Choisir une case valide est appuyer sur [Entrer]");
                 Console.SetCursorPosition(column * 6 + 1, row * 4 + 1);
@@ -149,20 +154,6 @@ namespace MorpionApp
             }      
         }
 
-        public void affichePlateau()
-        {
-            Console.WriteLine();
-            Console.WriteLine($" {grille[0, 0]}  |  {grille[0, 1]}  |  {grille[0, 2]}");
-            Console.WriteLine("    |     |");
-            Console.WriteLine("----+-----+----");
-            Console.WriteLine("    |     |");
-            Console.WriteLine($" {grille[1, 0]}  |  {grille[1, 1]}  |  {grille[1, 2]}");
-            Console.WriteLine("    |     |");
-            Console.WriteLine("----+-----+----");
-            Console.WriteLine("    |     |");
-            Console.WriteLine($" {grille[2, 0]}  |  {grille[1, 1]}  |  {grille[0, 2]}");
-        }
-
         public bool verifVictoire(char c) =>
              grille[0, 0] == c && grille[1, 0] == c && grille[2, 0] == c ||
              grille[0, 1] == c && grille[1, 1] == c && grille[2, 1] == c ||
@@ -181,9 +172,8 @@ namespace MorpionApp
 
         public void finPartie(string msg)
         {
-            Console.Clear();
-            affichePlateau();
-            Console.WriteLine(msg);
+            consoleUtilisateur.afficherPlateau(grille);
+            consoleUtilisateur.afficherFinPartie(msg);
         }
     }
 }
