@@ -113,6 +113,10 @@ Division du programme en plusieurs classe distinctes :
   Point d'entrée principal du programme.
   
   Crée les instances des classes nécessaires et lance la boucle de jeu.
+
+- **Mise en place d'abstraction pour le respect du OCP et de l'injection de dépendances à travers des Interfaces IJeu , IVueJeu , IJoueur , etc...**
+- **Mise en place d'une factoryJoueur pour la création des Joueurs**
+- **Création de classe Grille , Cellule ,Jeton et de leur interface pour le respect de SRP**
   
   
 
@@ -139,3 +143,20 @@ Exemple: Remplacer `c` par `symboleJoueur` dans la méthode `verifVictoire
 
 
 #### **Implémentation de test unitaire**
+
+## III. Le développement des fonctionnalités manquantes  :
+
+Mise en place de L'IA a travers les joueurOrdinateur fabriqué au sein de l'usine joueur
+
+Pour la sérialisation : 
+. Définir la structure des données:
+
+Définir une structure pour chaque type de données à sérialiser (joueur, grille, etc.).
+Chaque structure doit contenir les attributs pertinents de l'objet.
+sérialiser les données à l'aide d'une bibliothèque JSON
+écrire le JSON dans un fichier
+
+Puis au chargement de la partie Désérialiser le JSON
+et load l'état du jeu
+
+On pourra faire ca a travers une classe sauvegarde qui sauvegradra les données du jeu
