@@ -2,7 +2,7 @@
 
 ## I. Analyse de la solution de base :
 
-##### **Présence de code mort**
+#### **Présence de code mort**
 
 Le code commenté dans la méthode `tourJoueur` n'est jamais exécuté et peut être supprimé.
 
@@ -21,7 +21,7 @@ Le code commenté dans la méthode `tourJoueur` n'est jamais exécuté et peut �
 
 
 
-##### **Duplication de code** :tri:
+#### **Duplication de code**
 
 Certaine méthode exécutent le meme code a une variable pret il est donc possible de créer une méthode utilisable pour le joueur1 et le joueur2 afin de rendre le code plus maintenable
 
@@ -34,13 +34,13 @@ public void tourJoueur2() {...}
 
 
 
-##### **Violation du principe de responsabilité unique**
+#### **Violation du principe de responsabilité unique**
 
  La classe `MainProgram` gère plusieurs aspects distincts (sélection du jeu, boucle de jeu, interface utilisateur) et devrait être refactorisée en classes distinctes.
 
 
 
-##### **Violation du principe OCP (Open-Close-Principle)**
+#### **Violation du principe OCP (Open-Close-Principle)**
 
 Il stipule que les classes et modules logiciels doivent être ouverts à l'extension mais fermés à la modification.
 
@@ -56,13 +56,13 @@ En d'autres termes, il devrait être possible d'ajouter de nouvelles fonctionnal
 
 
 
-##### **Présence de "Magic Number"**
+#### **Présence de "Magic Number"**
 
 Les valeurs "4" et "7" dans la déclaration de la grille (`grille = new char[4, 7];`) ne sont pas explicites et pourraient être remplacées par des constantes nommées pour une meilleure compréhension.
 
 
 
-##### **Nom des variables peu intuitifs**
+#### **Nom des variables peu intuitifs**
 
 La variable `c` dans la méthode `verifVictoire` n'est pas claire et pourrait être remplacée par un nom plus précis indiquant son rôle.
 
@@ -72,15 +72,15 @@ public bool verifVictoire(char c)
 
 ## 2. Proposition d'amélioration :
 
-##### **Présence de code mort**
+#### **Présence de code mort**
 
 - Supprimer le code commenté dans la méthode `tourJoueur`.
 
-##### **Duplication de code**
+#### **Duplication de code**
 
 - Implémenter une méthode unique `tourJoueur(int joueur)` paramétrée par le numéro du joueur pour éviter la duplication de code entre `tourJoueur` et `tourJoueur2`.
 
-##### **Violation des principes SOLID**
+#### **Violation des principes SOLID**
 
 Division du programme en plusieurs classe distinctes :
 
@@ -116,7 +116,7 @@ Division du programme en plusieurs classe distinctes :
   
   
 
-##### **Présence de "Magic Number"**
+#### **Présence de "Magic Number"**
 
 - Remplacer les valeurs "4" et "7" par des constantes nommées explicites pour une meilleure compréhension.
 
@@ -132,10 +132,10 @@ Exemple: Remplacer `c` par `symboleJoueur` dans la méthode `verifVictoire
 
 
 
-##### **Gestion des erreurs:**
+#### **Gestion des erreurs:**
 
  Implémenter une gestion des erreurs robuste pour garantir la fiabilité du programme.
 
 
 
-##### **Implémentation de test unitaire**
+#### **Implémentation de test unitaire**
