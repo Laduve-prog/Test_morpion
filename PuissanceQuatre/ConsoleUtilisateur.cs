@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +13,7 @@ namespace MorpionApp
         {
             int rows = grille.GetLength(0);
             int columns = grille.GetLength(1);
+            Console.Clear();
             Console.WriteLine();
             for (int i = 0; i < rows; i++)
             {
@@ -33,16 +35,6 @@ namespace MorpionApp
                 }
             }   
         }
-        
-        void afficherVictoire(string message)
-        {
-            
-        }
-
-        void afficherEgalite(string message)
-        {
-            
-        }
 
         internal void afficherFinPartie(string message)
         {
@@ -50,9 +42,16 @@ namespace MorpionApp
             Console.WriteLine(message);
         }
 
-        void afficherQuitterJeu()
+        public void displayInput(int column , int row)
         {
-            
+            Console.WriteLine();
+            Console.WriteLine("Choisir une case valide est appuyer sur [Entrer]");
+            Console.SetCursorPosition(column * 6 + 1, row * 4 + 1);
+        }
+
+        public void afficherMessage(string message)
+        {
+            Console.WriteLine(message);
         }
     }
 }

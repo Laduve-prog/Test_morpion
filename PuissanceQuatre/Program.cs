@@ -8,49 +8,31 @@ namespace MorpionApp
 {
     public class Program
     {
+
         static void Main(string[] args)
         {
-            Console.WriteLine("Jouer à quel jeu ? Taper [X] pour le morpion et [P] pour le puissance 4.");
-        GetKey:
-            switch (Console.ReadKey(true).Key)
+
+            SelecteurJeu selecteurJeu = new SelecteurJeu();
+            ConsoleUtilisateur console = new ConsoleUtilisateur();
+
+            while (true)
             {
-                case ConsoleKey.X:
-                    Morpion morpion = new Morpion();
-                    morpion.BoucleJeu();
+                Jeu jeu = selecteurJeu.ChoisirJeu();
+                jeu.BoucleJeu();
+
+                console.afficherMessage("Jouer à un autre jeu ? Taper [R] pour changer de jeu. Taper [Echap] pour quitter.");
+
+                ConsoleKey key = Console.ReadKey(true).Key;
+                if (key == ConsoleKey.Escape)
+                {
                     break;
-                case ConsoleKey.P:
-                    PuissanceQuatre puissanceQuatre = new PuissanceQuatre();
-                    puissanceQuatre.BoucleJeu();
-                    break;
-                default:
-                    goto GetKey;
+                }
+                if (key == ConsoleKey.R)
+                {
+                    jeu = selecteurJeu.ChoisirJeu();
+                    jeu.BoucleJeu();
+                }
             }
-            Console.WriteLine("Jouer à un autre jeu ? Taper [R] pour changer de jeu. Taper [Echap] pour quitter.");
-        GetKey1:
-            switch (Console.ReadKey(true).Key)
-            {
-                case ConsoleKey.R:
-                    Console.WriteLine("Jouer à quel jeu ? Taper [X] pour le morpion et [P] pour le puissance 4.");
-                GetKey2:
-                    switch (Console.ReadKey(true).Key)
-                    {
-                        case ConsoleKey.X:
-                            Morpion morpion = new Morpion();
-                            morpion.BoucleJeu();
-                            break;
-                        case ConsoleKey.P:
-                            PuissanceQuatre puissanceQuatre = new PuissanceQuatre();
-                            puissanceQuatre.BoucleJeu();
-                            break;
-                        default:
-                            goto GetKey2;
-                    }
-                    break;
-                case ConsoleKey.Escape:
-                    break;
-                default:
-                    goto GetKey1;
-            }
-        }        
+        }
     }
 }
