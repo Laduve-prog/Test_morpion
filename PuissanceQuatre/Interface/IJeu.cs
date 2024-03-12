@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MorpionApp
+namespace MorpionApp.Interface
 {
-    internal interface IJeu
+    public interface IJeu
     {
         void BoucleJeu();
     }

@@ -4,24 +4,35 @@ using System.Data.Common;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MorpionApp.Interface;
 
 namespace MorpionApp
 {
-    internal class ConsoleUtilisateur
+    internal class ConsoleUtilisateur : IVueJeu
     {
-        public void afficherPlateau(char[,] grille)
+        public void afficherPlateau(IGrille grille)
         {
-            int rows = grille.GetLength(0);
-            int columns = grille.GetLength(1);
+            int rows = grille.ligne;
+            int columns = grille.colonne;
+
             Console.Clear();
             Console.WriteLine();
+
             for (int i = 0; i < rows; i++)
             {
-                Console.Write(" ");
                 for (int j = 0; j < columns; j++)
                 {
-                    Console.Write(grille[i, j]);
-                    if (j < columns - 1)
+                    Console.Write(" ");
+                    if (j < columns)
+                    {
+                        Console.Write("  |  ");
+                    }
+                }
+                Console.WriteLine();
+                for (int j = 0; j < columns; j++)
+                {
+                    Console.Write(grille.GetCellule(i, j).jeton.Symbole);
+                    if (j < columns)
                     {
                         Console.Write("  |  ");
                     }
@@ -29,16 +40,26 @@ namespace MorpionApp
                 Console.WriteLine();
                 if (i < rows - 1)
                 {
-                    Console.WriteLine("    |     |");
-                    Console.WriteLine("----+-----+----");
-                    Console.WriteLine("    |     |");
+                    for(int j = 0 ; j < columns; j++)
+                    {
+                        if (j == columns - 1)
+                        {
+                            Console.Write("---+");
+                        }
+                        else
+                        {
+                            Console.Write("---+--");
+                        }
+                    }
+                    Console.WriteLine();
                 }
-            }   
+            }  
         }
 
-        internal void afficherFinPartie(string message)
+        public void afficherFinPartie(string message , IGrille grille)
         {
             Console.Clear();
+            afficherPlateau(grille);
             Console.WriteLine(message);
         }
 
@@ -46,7 +67,7 @@ namespace MorpionApp
         {
             Console.WriteLine();
             Console.WriteLine("Choisir une case valide est appuyer sur [Entrer]");
-            Console.SetCursorPosition(column * 6 + 1, row * 4 + 1);
+            Console.SetCursorPosition(column * 6 + 1 , row * 3 + 1 );
         }
 
         public void afficherMessage(string message)

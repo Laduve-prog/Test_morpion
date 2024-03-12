@@ -3,42 +3,52 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MorpionApp.Interface;
+using MorpionApp.Joueur;
 
 namespace MorpionApp
 {
     public abstract class Jeu : IJeu
     {
-        public char[,] grille;
+        public IGrille _grille;
+        public readonly IVueJeu _vueJeu;
 
-        public void InitialiserPlateau(int NB_LIGNES , int NB_COLONNES)
+        protected abstract int NB_LIGNES { get; }
+        protected abstract int NB_COLONNES { get; }
+        protected abstract int CONDITION_VICTOIRE { get; }
+
+        protected readonly IJoueur _joueur1;
+        protected readonly IJoueur _joueur2;
+
+        public bool quitterJeu = false;
+        public bool tourDuJoueur1 = true;
+
+        IJoueur joueurCourant;
+
+        public Jeu(IVueJeu vueJeu , IJoueur joueur1 , IJoueur joueur2)
         {
-            for (int i = 0; i < NB_LIGNES; i++)
-            {
-                for (int j = 0; j < NB_COLONNES; j++)
-                {
-                    grille[i, j] = ' ';
-                }
-            }
+            _vueJeu = vueJeu;
+
+            _joueur1 = joueur1;
+            _joueur2 = joueur2;
         }
 
-        public abstract void JouerTour(int joueur);
-
-        public bool VerifierVictoire(char symboleJoueur, char[,] grille, int nombreJetonsPourGagner)
+        public bool VerifierVictoire(char symboleJoueur, int nombreJetonsPourGagner)
         {
-            return VerifierLigne(symboleJoueur, grille, nombreJetonsPourGagner) ||
-                   VerifierColonne(symboleJoueur, grille, nombreJetonsPourGagner) ||
-                   VerifierDiagonales(symboleJoueur, grille, nombreJetonsPourGagner);
+            return VerifierLigne(symboleJoueur, nombreJetonsPourGagner) ||
+                   VerifierColonne(symboleJoueur, nombreJetonsPourGagner) ||
+                   VerifierDiagonales(symboleJoueur, nombreJetonsPourGagner);
         }
 
-        private bool VerifierLigne(char symboleJoueur, char[,] grille, int nombreJetonsPourGagner)
+        private bool VerifierLigne(char symboleJoueur, int nombreJetonsPourGagner)
         {
-            for (int i = 0; i < grille.GetLength(0); i++)
+            for (int i = 0; i < _grille.ligne; i++)
             {
-                for (int j = 0; j < grille.GetLength(1); j++)
+                for (int j = 0; j < _grille.colonne; j++)
                 {
-                    if (grille[i, j] == symboleJoueur)
+                    if (_grille.GetCellule(i, j).jeton.Symbole == symboleJoueur)
                     {
-                        if (EstSerieGagnante(symboleJoueur, grille, i, j, nombreJetonsPourGagner, 0, 1))
+                        if (EstSerieGagnante(symboleJoueur, i, j, nombreJetonsPourGagner, 0, 1))
                         {
                             return true;
                         }
@@ -49,15 +59,15 @@ namespace MorpionApp
             return false;
         }
 
-        private bool VerifierColonne(char symboleJoueur, char[,] grille, int nombreJetonsPourGagner)
+        private bool VerifierColonne(char symboleJoueur, int nombreJetonsPourGagner)
         {
-            for (int i = 0; i < grille.GetLength(0); i++)
+            for (int i = 0; i < _grille.ligne; i++)
             {
-                for (int j = 0; j < grille.GetLength(1); j++)
+                for (int j = 0; j < _grille.colonne; j++)
                 {
-                    if (grille[i, j] == symboleJoueur)
+                    if (_grille.GetCellule(i,j).jeton.Symbole == symboleJoueur)
                     {
-                        if (EstSerieGagnante(symboleJoueur, grille, i, j, nombreJetonsPourGagner, 1, 0))
+                        if (EstSerieGagnante(symboleJoueur, i, j, nombreJetonsPourGagner, 1, 0))
                         {
                             return true;
                         }
@@ -68,16 +78,16 @@ namespace MorpionApp
             return false;
         }
 
-        private bool VerifierDiagonales(char symboleJoueur, char[,] grille, int nombreJetonsPourGagner)
+        private bool VerifierDiagonales(char symboleJoueur, int nombreJetonsPourGagner)
         {
-            for (int i = 0; i < grille.GetLength(0); i++)
+            for (int i = 0; i < _grille.ligne; i++)
             {
-                for (int j = 0; j < grille.GetLength(1); j++)
+                for (int j = 0; j < _grille.colonne; j++)
                 {
-                    if (grille[i, j] == symboleJoueur)
+                    if (_grille.GetCellule(i,j).jeton.Symbole == symboleJoueur)
                     {
-                        if (EstSerieGagnante(symboleJoueur, grille, i, j, nombreJetonsPourGagner, 1, 1) ||
-                            EstSerieGagnante(symboleJoueur, grille, i, j, nombreJetonsPourGagner, 1, -1))
+                        if (EstSerieGagnante(symboleJoueur, i, j, nombreJetonsPourGagner, 1, 1) ||
+                            EstSerieGagnante(symboleJoueur, i, j, nombreJetonsPourGagner, 1, -1))
                         {
                             return true;
                         }
@@ -88,16 +98,16 @@ namespace MorpionApp
             return false;
         }
 
-        private bool EstSerieGagnante(char symboleJoueur, char[,] grille, int ligne, int colonne, int longueurSerie, int deltaLigne, int deltaColonne)
+        private bool EstSerieGagnante(char symboleJoueur, int ligne, int colonne, int longueurSerie, int deltaLigne, int deltaColonne)
         {
             for (int k = 0; k < longueurSerie; k++)
             {
                 int nouvelleLigne = ligne + k * deltaLigne;
                 int nouvelleColonne = colonne + k * deltaColonne;
 
-                if (nouvelleLigne >= grille.GetLength(0) || nouvelleLigne < 0 ||
-                    nouvelleColonne >= grille.GetLength(1) || nouvelleColonne < 0 ||
-                    grille[nouvelleLigne, nouvelleColonne] != symboleJoueur)
+                if (nouvelleLigne >= _grille.ligne || nouvelleLigne < 0 ||
+                    nouvelleColonne >= _grille.colonne || nouvelleColonne < 0 ||
+                    _grille.GetCellule(nouvelleLigne, nouvelleColonne).jeton.Symbole != symboleJoueur)
                 {
                     return false;
                 }
@@ -106,13 +116,13 @@ namespace MorpionApp
             return true;
         }
 
-        public static bool VerifierEgalite(char[,] grille)
+        public  bool VerifierEgalite()
         {
-            for (int i = 0; i < grille.GetLength(0); i++)
+            for (int i = 0; i < _grille.ligne; i++)
             {
-                for (int j = 0; j < grille.GetLength(1); j++)
+                for (int j = 0; j < _grille.colonne; j++)
                 {
-                    if (grille[i, j] == ' ')
+                    if (_grille.GetCellule(i, j).jeton.Symbole == ' ')
                     {
                         return false;
                     }
@@ -121,6 +131,45 @@ namespace MorpionApp
             return true;
         }
 
-        public abstract void BoucleJeu();
+        public void BoucleJeu()
+        {
+            while (!quitterJeu)
+            {
+                joueurCourant = tourDuJoueur1 ? _joueur1 : _joueur2;
+                joueurCourant.JouerTour(_grille,_vueJeu);
+
+                if (VerifierVictoire(joueurCourant.Jeton.Symbole, CONDITION_VICTOIRE))
+                {
+                    _vueJeu.afficherPlateau(_grille);
+                    _vueJeu.afficherFinPartie(joueurCourant.Nom + " à gagné !", _grille);
+                    break;
+                }
+
+                tourDuJoueur1 = !tourDuJoueur1;
+
+                if (VerifierEgalite())
+                {
+                    _vueJeu.afficherPlateau(_grille);
+                    _vueJeu.afficherFinPartie("Aucun vainqueur, la partie se termine sur une égalité.", _grille);
+                    break;
+                }
+            }
+            if (!quitterJeu)
+            {
+                _vueJeu.afficherMessage("Appuyer sur [Echap] pour quitter, [Entrer] pour rejouer.");
+            GetKey:
+                switch (Console.ReadKey(true).Key)
+                {
+                    case ConsoleKey.Enter:
+                        break;
+                    case ConsoleKey.Escape:
+                        quitterJeu = true;
+                        Console.Clear();
+                        break;
+                    default:
+                        goto GetKey;
+                }
+            }
+        }
     }
 }
