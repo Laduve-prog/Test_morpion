@@ -20,12 +20,20 @@ namespace RealEstateCredit
             return monthlyPayment;
         }
 
-        public double CalculateTotalAmount(double loanAmount, double monthsDuration, double nominalRate)
+        public double CalculateTotalAmountWithInterest(double loanAmount, double monthsDuration, double nominalRate)
         {
            double totalAmount;
            double monthlyPayment = CalculateMonthlyPayment(loanAmount, monthsDuration, nominalRate);
            totalAmount = monthlyPayment * monthsDuration;
            return totalAmount;
+        }
+
+        public double CalculateTotalLeftToPay(double loanAmount, double monthsDuration, double nominalRate, double paidMonths)
+        {
+            double totalLeftToPay;
+            double monthlyPayment = CalculateMonthlyPayment(loanAmount, monthsDuration, nominalRate);
+            totalLeftToPay = monthlyPayment * (monthsDuration - paidMonths);
+            return totalLeftToPay;
         }
     }
 }

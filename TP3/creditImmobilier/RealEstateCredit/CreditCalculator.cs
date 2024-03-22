@@ -17,7 +17,8 @@ public class CreditCalculator
                 double nominalRate = CreditInputValidator.ValidateRate(args[2]);
 
                 Calculator calculator = new Calculator();
-                calculator.CalculateTotalAmount(loanAmount, monthsDuration, nominalRate);
+                calculator.CalculateTotalAmountWithInterest(loanAmount, monthsDuration, nominalRate);
+
             }
             catch
             {
