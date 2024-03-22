@@ -11,7 +11,7 @@ namespace RealEstateCreditTest
         {
             string validAmount = "60000";
             int expected = 60000;
-            int actual = CreditInputValidator.amountValidation(validAmount);
+            int actual = CreditInputValidator.ValidateAmount(validAmount);
             Assert.Equal(expected, actual);
         }
 
@@ -19,14 +19,14 @@ namespace RealEstateCreditTest
         public void TestAmountValidation_InvalidFormat_ThrowsException()
         {
             string invalidFormat = "invalid";
-            Assert.Throws<ArgumentException>(() => CreditInputValidator.amountValidation(invalidFormat));
+            Assert.Throws<ArgumentException>(() => CreditInputValidator.ValidateAmount(invalidFormat));
         }
 
         [Fact]
         public void TestAmountValidation_AmountLessThanMinimum_ThrowsException()
         {
             string lessThanMinimum = "40000";
-            Assert.Throws<ArgumentException>(() => CreditInputValidator.amountValidation(lessThanMinimum));
+            Assert.Throws<ArgumentException>(() => CreditInputValidator.ValidateAmount(lessThanMinimum));
         }
 
         [Fact]
@@ -34,7 +34,7 @@ namespace RealEstateCreditTest
         {
             string validDuration = "120";
             int expected = 120;
-            int actual = CreditInputValidator.durationValidation(validDuration);
+            int actual = CreditInputValidator.ValidateDuration(validDuration);
             Assert.Equal(expected, actual);
         }
 
@@ -42,44 +42,44 @@ namespace RealEstateCreditTest
         public void TestDurationValidation_InvalidFormat_ThrowsException()
         {
             string invalidFormat = "invalid";
-            Assert.Throws<ArgumentException>(() => CreditInputValidator.durationValidation(invalidFormat));
+            Assert.Throws<ArgumentException>(() => CreditInputValidator.ValidateDuration(invalidFormat));
         }
 
         [Fact]
         public void TestDurationValidation_DurationLessThanMinimum_ThrowsException()
         {
             string lessThanMinimum = "100";
-            Assert.Throws<ArgumentException>(() => CreditInputValidator.durationValidation(lessThanMinimum));
+            Assert.Throws<ArgumentException>(() => CreditInputValidator.ValidateDuration(lessThanMinimum));
         }
 
         [Fact]
         public void TestDurationValidation_DurationMoreThanMaximum_ThrowsException()
         {
             string moreThanMaximum = "400";
-            Assert.Throws<ArgumentException>(() => CreditInputValidator.durationValidation(moreThanMaximum));
+            Assert.Throws<ArgumentException>(() => CreditInputValidator.ValidateDuration(moreThanMaximum));
         }
 
         [Fact]
         public void TestRateValidation_ValidRate_ReturnsRate()
         {
             string validRate = "5";
-            decimal expected = 5;
-            decimal actual = CreditInputValidator.rateValidation(validRate);
-            Assert.Equal(expected, actual);
+            double expected = 0.05;
+            double actual = CreditInputValidator.ValidateRate(validRate);
+            Assert.Equal(expected, actual , 2);
         }
 
         [Fact]
         public void TestRateValidation_InvalidFormat_ThrowsException()
         {
             string invalidFormat = "invalid";
-            Assert.Throws<ArgumentException>(() => CreditInputValidator.rateValidation(invalidFormat));
+            Assert.Throws<ArgumentException>(() => CreditInputValidator.ValidateRate(invalidFormat));
         }
 
         [Fact]
         public void TestRateValidation_RateLessThanMinimum_ThrowsException()
         {
             string lessThanMinimum = "-1";
-            Assert.Throws<ArgumentException>(() => CreditInputValidator.rateValidation(lessThanMinimum));
+            Assert.Throws<ArgumentException>(() => CreditInputValidator.ValidateRate(lessThanMinimum));
         }
     }
 }

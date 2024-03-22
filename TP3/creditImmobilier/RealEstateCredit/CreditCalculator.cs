@@ -10,14 +10,14 @@ public class CreditCalculator
         }
         else
         {
-            decimal loanAmount = decimal.Parse(args[0]);
-            int monthsDuration = int.Parse(args[1]);
-            decimal nominalRate = decimal.Parse(args[2]);
-
             try
             {
-                MonthlyPaymentsCalculator calculator = new MonthlyPaymentsCalculator(loanAmount, monthsDuration, nominalRate);
-                decimal totalAmount = calculator.CalculateTotalAmount();
+                int loanAmount = CreditInputValidator.ValidateAmount(args[0]);
+                int monthsDuration = CreditInputValidator.ValidateDuration(args[1]);
+                double nominalRate = CreditInputValidator.ValidateRate(args[2]);
+
+                Calculator calculator = new Calculator();
+                calculator.CalculateTotalAmount(loanAmount, monthsDuration, nominalRate);
             }
             catch
             {

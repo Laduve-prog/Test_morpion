@@ -8,7 +8,7 @@ namespace RealEstateCredit
         private const int MAXIMUM_DURATION = 300;
         private const int MINIMUM_RATE = 0;
 
-        public static int amountValidation(string value)
+        public static int ValidateAmount(string value)
         {
             int loanAmount;
 
@@ -27,7 +27,7 @@ namespace RealEstateCredit
             return loanAmount;
         }
 
-        public static int durationValidation(string value)
+        public static int ValidateDuration(string value)
         {
             int monthsDuration;
 
@@ -41,7 +41,7 @@ namespace RealEstateCredit
                 {
                     throw new ArgumentException("monthsDuration should be superior or equal to " + MINIMUM_DURATION);
                 }
-                else if(monthsDuration >= MAXIMUM_DURATION)
+                else if(monthsDuration > MAXIMUM_DURATION)
                 {
                     throw new ArgumentException("monthsDuration should be inferior or equal to " + MAXIMUM_DURATION);
                 }
@@ -50,11 +50,11 @@ namespace RealEstateCredit
             return monthsDuration;
         }
 
-        public static decimal rateValidation(string value)
+        public static double ValidateRate(string value)
         {
-            decimal nominalRate;
+            double nominalRate;
 
-            if (!decimal.TryParse(value, out nominalRate))
+            if (!double.TryParse(value, out nominalRate))
             {
                 throw new ArgumentException("Invalid format for nominalRate");
             }
@@ -66,7 +66,7 @@ namespace RealEstateCredit
                 }
             }
 
-            return nominalRate;
+            return nominalRate/100;
         }   
     }
 }
