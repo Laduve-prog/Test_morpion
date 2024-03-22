@@ -1,4 +1,4 @@
-﻿using realEstateCredit;
+﻿using RealEstateCredit;
 
 public class CreditCalculator
 {

@@ -1,5 +1,5 @@
 ﻿
-namespace realEstateCredit
+namespace RealEstateCredit
 {
     public class MonthlyPaymentsCalculator
     {

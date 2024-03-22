@@ -1,6 +1,6 @@
-﻿using realEstateCredit;
+﻿using RealEstateCredit;
 
-namespace testCreditImmobilier
+namespace RealEstateCreditTest
 {
     public class MonthlyPaymentsCalculatorTests
     {
