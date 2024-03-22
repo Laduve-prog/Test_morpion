@@ -12,7 +12,7 @@ namespace testCreditImmobilier
 
             displayView.PrintUsage();
 
-            var expectedOutput = "Usage: creditImmobilier <montant> <duree> <taux>" + Environment.NewLine;
+            var expectedOutput = "Usage: RealEstateCredit <amount> <duration in months> <nominal rate>" + Environment.NewLine;
             Assert.Equal(expectedOutput, output.ToString());
         }
     }

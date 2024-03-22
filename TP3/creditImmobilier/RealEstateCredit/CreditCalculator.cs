@@ -4,8 +4,6 @@ public class CreditCalculator
 {
     public static void Main(string[] args)
     {
-        displayView.PrintUsage();
-
         if (args.Length != 3)
         {
             displayView.PrintUsage();
