@@ -1,5 +1,5 @@
 ﻿using System;
-namespace RealEstateCredit
+namespace RealEstateCredit.Validators
 {
     public class CreditInputValidator
     {
@@ -18,7 +18,7 @@ namespace RealEstateCredit
             }
             else
             {
-                if(loanAmount < MINIMUM_AMOUNT)
+                if (loanAmount < MINIMUM_AMOUNT)
                 {
                     throw new ArgumentException("loanAmount should be superior to 50k");
                 }
@@ -37,11 +37,11 @@ namespace RealEstateCredit
             }
             else
             {
-                if(monthsDuration <= MINIMUM_DURATION)
+                if (monthsDuration < MINIMUM_DURATION)
                 {
                     throw new ArgumentException("monthsDuration should be superior or equal to " + MINIMUM_DURATION);
                 }
-                else if(monthsDuration > MAXIMUM_DURATION)
+                else if (monthsDuration > MAXIMUM_DURATION)
                 {
                     throw new ArgumentException("monthsDuration should be inferior or equal to " + MAXIMUM_DURATION);
                 }
@@ -60,13 +60,13 @@ namespace RealEstateCredit
             }
             else
             {
-                if(nominalRate < MINIMUM_RATE)
+                if (nominalRate < MINIMUM_RATE)
                 {
                     throw new ArgumentException("nominalRate should be superior to 0");
                 }
             }
 
-            return nominalRate/100;
-        }   
+            return nominalRate / 100;
+        }
     }
 }

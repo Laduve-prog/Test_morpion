@@ -1,4 +1,9 @@
-﻿using RealEstateCredit;
+﻿using RealEstateCredit.Models;
+using RealEstateCredit.ReportsGenerator;
+using RealEstateCredit.UI;
+using RealEstateCredit.Calculations;
+using RealEstateCredit.Interfaces;
+
 
 public class CreditCalculator
 {
@@ -7,22 +12,25 @@ public class CreditCalculator
         if (args.Length != 3)
         {
             displayView.PrintUsage();
+            return;
         }
         else
         {
             try
             {
-                int loanAmount = CreditInputValidator.ValidateAmount(args[0]);
-                int monthsDuration = CreditInputValidator.ValidateDuration(args[1]);
-                double nominalRate = CreditInputValidator.ValidateRate(args[2]);
+                string projectPath = AppDomain.CurrentDomain.BaseDirectory + "/../../../Reports/";
+                string fileName = "report_" + DateTime.Now.ToString("yyyyMMdd_HHmmss") + ".csv";
 
-                Calculator calculator = new Calculator();
-                calculator.CalculateTotalAmountWithInterest(loanAmount, monthsDuration, nominalRate);
+                ICreditCalculator calculator = new Calculator();
 
+                LoanProcessor processor = new LoanProcessor(calculator);
+                CreditEstimation creditEstimation = processor.ProcessLoan(args[0], args[1], args[2]);
+
+                CsvCreditReportGenerator.GenerateCsvCreditReport(creditEstimation, projectPath+fileName);
             }
-            catch
+            catch ( Exception e)
             {
-
+                displayView.PrintError(e.Message);
             }
         }
     }

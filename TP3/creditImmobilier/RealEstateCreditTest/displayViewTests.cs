@@ -1,4 +1,4 @@
-using RealEstateCredit;
+using RealEstateCredit.UI;
 
 namespace RealEstateCreditTest
 {

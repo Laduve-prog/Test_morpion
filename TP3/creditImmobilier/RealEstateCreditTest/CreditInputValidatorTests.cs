@@ -1,6 +1,6 @@
 ﻿using Xunit;
-using RealEstateCredit;
 using System;
+using RealEstateCredit.Validators;
 
 namespace RealEstateCreditTest
 {
