@@ -2,7 +2,7 @@
   "profiles": {
     "RealEstateCredit": {
       "commandName": "Project",
-      "commandLineArgs": "200000\r\n180\r\n2"
+      "commandLineArgs": "200000\r\n108\r\n,"
     }
   }
 }

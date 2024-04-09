@@ -6,10 +6,5 @@
         {
             Console.WriteLine("Usage: RealEstateCredit <amount> <duration in months> <nominal rate>");
         }
-
-        public static void PrintError(string message)
-        {
-            Console.WriteLine(message);
-        }
     }
 }

@@ -1,8 +1,8 @@
-﻿using RealEstateCredit.Models;
-using RealEstateCredit.ReportsGenerator;
-using RealEstateCredit.UI;
-using RealEstateCredit.Calculations;
-using RealEstateCredit.Interfaces;
+﻿using RealEstateCredit.UI;
+using RealEstateCredit.Domain;
+using RealEstateCredit.Domain.ValueObjects;
+using RealEstateCredit.Technical;
+using RealEstateCredit;
 
 
 public class CreditCalculator
@@ -14,25 +14,16 @@ public class CreditCalculator
             displayView.PrintUsage();
             return;
         }
-        else
-        {
-            try
-            {
-                string projectPath = AppDomain.CurrentDomain.BaseDirectory + "/../../../Reports/";
-                string fileName = "report_" + DateTime.Now.ToString("yyyyMMdd_HHmmss") + ".csv";
 
-                ICreditCalculator calculator = new Calculator();
+        var inputs = new UserInputs(args);
 
-                LoanProcessor processor = new LoanProcessor(calculator);
-                CreditEstimation creditEstimation = processor.ProcessLoan(args[0], args[1], args[2]);
+        CreditInfo credit = new CreditInfo(inputs.amount, inputs.durationInMonths, inputs.nomimalRate );
 
-                CsvCreditReportGenerator.GenerateCsvCreditReport(creditEstimation, projectPath+fileName);
-            }
-            catch ( Exception e)
-            {
-                displayView.PrintError(e.Message);
-            }
-        }
+        Clock clock = new Clock();
+        FileSystem fileSystem = new FileSystem();
+
+        ScheduleGenerator scheduleGenerator = new ScheduleGenerator(fileSystem, clock);
+        scheduleGenerator.GenerateCsvCreditReport(credit);
     }
 }
 

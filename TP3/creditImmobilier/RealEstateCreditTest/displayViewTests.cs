@@ -1,6 +1,6 @@
 using RealEstateCredit.UI;
 
-namespace RealEstateCreditTest
+namespace RealEstateCredit.Tests
 {
     public class displayViewTests
     {
